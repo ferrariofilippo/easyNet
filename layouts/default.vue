@@ -1,17 +1,20 @@
 <template>
-  <div>
-    <Header
-      :loggedIn="logged"
-      :email="email"
-      :userName="username"
-      :profilePicture="profilePicture"
-    />
+  <div class="flex flex-col h-screen justify-between">
+    <Header :loggedIn="logged" :email="email" :userName="username" :profilePicture="profilePicture" />
     <div class="min-h-[calc(100vh-4rem)] flex justify-center mt-16">
       <slot />
     </div>
     <Footer />
   </div>
 </template>
+<script setup>
+import { onMounted } from "vue";
+import { initFlowbite } from "flowbite";
+
+onMounted(() => {
+  initFlowbite();
+});
+</script>
 <script>
 export default {
   data: () => ({
@@ -35,19 +38,24 @@ export default {
       } else {
         const loggedBrowserCache = localStorage.getItem("logged");
 
-        this.logged = loggedBrowserCache !== null && loggedBrowserCache === "true";
+        this.logged =
+          loggedBrowserCache !== null && loggedBrowserCache === "true";
         sessionStorage.setItem("logged", this.logged);
       }
 
       const usernameSessionCache = sessionStorage.getItem("username");
-      if (usernameSessionCache !== null && usernameSessionCache !== "undefined") {
+      if (
+        usernameSessionCache !== null &&
+        usernameSessionCache !== "undefined"
+      ) {
         this.username = usernameSessionCache;
       } else {
         const usernameBrowserCache = localStorage.getItem("username");
 
-        this.username = usernameBrowserCache !== null && usernameBrowserCache !== "undefined"
-          ? usernameBrowserCache
-          : '';
+        this.username =
+          usernameBrowserCache !== null && usernameBrowserCache !== "undefined"
+            ? usernameBrowserCache
+            : "";
         sessionStorage.setItem("username", this.username);
       }
 
@@ -57,9 +65,10 @@ export default {
       } else {
         const emailBrowserCache = localStorage.getItem("email");
 
-        this.email = emailBrowserCache !== null && emailBrowserCache !== "undefined"
-          ? emailBrowserCache
-          : '';
+        this.email =
+          emailBrowserCache !== null && emailBrowserCache !== "undefined"
+            ? emailBrowserCache
+            : "";
         sessionStorage.setItem("email", this.email);
       }
 
@@ -69,15 +78,16 @@ export default {
       } else {
         const pictureBrowserCache = localStorage.getItem("profilePicture");
 
-        this.profilePicture = pictureBrowserCache !== null && pictureBrowserCache !== "undefined"
-          ? pictureBrowserCache
-          : '';
+        this.profilePicture =
+          pictureBrowserCache !== null && pictureBrowserCache !== "undefined"
+            ? pictureBrowserCache
+            : "";
         sessionStorage.setItem("profilePicture", this.profilePicture);
       }
 
-      const tokenSessionStorage = sessionStorage.getItem('token');
-      if (tokenSessionStorage === null  || tokenSessionStorage === "undefined") {
-        sessionStorage.setItem('token', localStorage.getItem('token'));
+      const tokenSessionStorage = sessionStorage.getItem("token");
+      if (tokenSessionStorage === null || tokenSessionStorage === "undefined") {
+        sessionStorage.setItem("token", localStorage.getItem("token"));
       }
     },
   },
